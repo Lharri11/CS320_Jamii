@@ -1,0 +1,9 @@
+/COM,ANSYS RELEASE 14.5    UP20120918       15:01:57    03/18/2017
+
+ *** ERROR ***                           CP =       0.983   TIME= 15:02:00
+ Data file H:\workspaceH\CS320_Jamii\war\css\Thumbs.db has incorrect     
+ format, is missing READ/WRITE permission, or is empty for RESUME.       
+
+ *** WARNING ***                         CP =       0.983   TIME= 15:02:00
+ WHILE PROCESSING FILE BASED INPUT (/INPUT OR MACRO) AN ERROR HAS        
+ OCCURRED.  SHOULD INPUT PROCESSING BE SUSPENDED?                        
