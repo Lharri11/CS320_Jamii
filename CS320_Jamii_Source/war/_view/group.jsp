@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html><head>
 	<link rel="icon" type="image/png" href="images/favicon.png">
@@ -71,7 +72,9 @@
     				</div>
     				<div class="pageInfo">
     					<div id="rating"> :) </div>
-    					<p id="pageName"> groupName </p>
+    					<c:forEach items="${groups}" var="group">
+			        		<p id="pageName">${group.name}</p>	
+			    		</c:forEach>
     					<div id="pageLinks"> 
     						<a href="#">${group.memberCount} Members</a> |
     						<a href="#">Photos</a> |

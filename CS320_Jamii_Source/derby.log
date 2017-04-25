@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Sun Apr 23 17:50:38 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-9ccb-9281-0000052d2ae0 
-on database directory C:\Users\Logan\workspace\CS320_Jamii_4-20\test.db with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
+Sun Apr 23 19:48:45 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-9d37-b36b-000006881068 
+on database directory C:\Users\Logan\git\CS320_Jamii_Source\test.db with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
 Loaded from file:/C:/Users/Logan/workspace/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_51-b16
-user.dir=C:\Users\Logan\workspace\CS320_Jamii_4-20
+user.dir=C:\Users\Logan\git\CS320_Jamii_Source
 os.name=Windows 8.1
 os.arch=amd64
 os.version=6.3
