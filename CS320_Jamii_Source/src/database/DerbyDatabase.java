@@ -117,9 +117,6 @@ public class DerbyDatabase implements IDatabase {
 						returnGroups.add(group);
 					}
 
-					if (!found) {
-						System.out.println("<" + user + "> is not in the database");
-					}
 					return returnGroups;
 				}	finally{
 					DBUtil.closeQuietly(set);
@@ -296,8 +293,8 @@ public class DerbyDatabase implements IDatabase {
 		
 		try{
 			stmt1 = conn.prepareStatement(
-					"INSERT INTO accounts (username, password, login_id, name, email, phone_number) "
-					+ " VALUES(?,?,?,?,?,?,?)");
+					"INSERT INTO accounts (username, password, login_id, name, email, phonenumber) "
+					+ " VALUES(?,?,?,?,?,?)");
 			stmt1.setString(1, account.getUsername());
 			stmt1.setString(2, account.getPassword());
 			stmt1.setInt(3, account.getLoginId());
@@ -479,7 +476,7 @@ public class DerbyDatabase implements IDatabase {
 						"	username varchar(40)," +
 						"	password varchar(40)," +
 						"   login_id integer," +
-						"	name varchar(20)," +
+						"	name varchar(50)," +
 						"	email varchar(50)," +
 						"	phonenumber varchar(25)" +
 						")"
@@ -594,7 +591,7 @@ public class DerbyDatabase implements IDatabase {
 					// populate accounts table (accounts first, since account_id is foreign key in groupMembers table)
 					insertAccount = conn.prepareStatement("insert into accounts (username, password, login_id, name, email, phonenumber) values (?, ?, ?, ?, ?, ?)");
 					for (Account account : accountList) {
-//						insertAccount.setInt(1, account.getUserId());	// auto-generated primary key, don't insert this
+//						insertAccount.setInt(1, account.getAccountId());	// auto-generated primary key, don't insert this
 						insertAccount.setString(1, account.getUsername());
 						insertAccount.setString(2, account.getPassword());
 						insertAccount.setInt(3, account.getLoginId());

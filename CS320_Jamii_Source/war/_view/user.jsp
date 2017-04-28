@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Script Eden ( http://scripteden.net/ ) Template Builder v2.0.0">  
-    <title>userName -  Jamii</title>
+    <title>${account.name} -  Jamii</title>
     <!--pageMeta-->
 
     <!-- Loading Bootstrap -->
@@ -53,16 +53,15 @@
                             <input type="image" src="images/search.png" value="Search" id="searchButton">
 						</form><br>
 	                    
-    					<div id="navbar-collapse-02" class="collapse navbar-collapse" >
-    						<ul class="nav navbar-nav navbar-right">
-    							<li class="propClone"><a href="#"><img src="images/user.png" class="tabIcon"></a></li>
-    							<li class="propClone"><a href="#"><img src="images/gear.png" class="tabIcon"></a></li>
-    							<input type="Submit" value="Logout" id="logoutSubmit" name="logoutSubmit">
-    						</ul>
-    					</div> 
-    					<!--/.navbar-collapse -->
+	                    <form action="${pageContext.servletContext.contextPath}/user" method="get">
+  							<div id="navbar-collapse-02" class="collapse navbar-collapse" >
+    							<input name="buttonPress" type="submit" value="Logout">
+    						</div> 
+						</form>
+						
+    					
     				</div><!-- /.container -->
-    			</nav>
+    			</nav><!--/.navbar-collapse -->
     			
     		<!--pageContent-->
     			<div >

@@ -789,6 +789,12 @@ pre code {
   margin-left: auto;
 }
 
+.signupcontainer {
+  padding-top: 15%;
+  padding-right: 25%;
+  padding-left: 25%;
+}
+
 .container:before,
 .container:after {
   display: table;
@@ -823,6 +829,44 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
+    width: 1170px;
+  }
+}
+
+.signupcontainer:before,
+.signupcontainer:after {
+  display: table;
+  content: " ";
+}
+
+.signupcontainer:after {
+  clear: both;
+}
+
+.signupcontainer:before,
+.signupcontainer:after {
+  display: table;
+  content: " ";
+}
+
+.signupcontainer:after {
+  clear: both;
+}
+
+@media (min-width: 768px) {
+  .signupcontainer {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .signupcontainer {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .signupcontainer {
     width: 1170px;
   }
 }

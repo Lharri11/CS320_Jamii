@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
 		try{
 			String username = req.getSession().getAttribute("username").toString();
 			if(username != null){
-				resp.sendRedirect(req.getContextPath() + "/home");
+				resp.sendRedirect(req.getContextPath() + "/user");
 			}
 		}
 		catch (NullPointerException e){

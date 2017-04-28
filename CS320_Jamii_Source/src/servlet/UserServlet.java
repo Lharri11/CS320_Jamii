@@ -30,6 +30,17 @@ public class UserServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/login");
 			return;
 		}
+
+		String button = req.getParameter("buttonPress");
+		
+		if(button != null){
+			if(button.toLowerCase().equals("logout")){
+				req.getSession().setAttribute("loggedin",false);
+				req.getSession().setAttribute("username", null);
+				req.getSession().setAttribute("login_id", -1);
+				req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
+			}
+		}
 		
 		List<Group> groups = null;
 		controller = new UserController();

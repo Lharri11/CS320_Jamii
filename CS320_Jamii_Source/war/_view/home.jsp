@@ -48,11 +48,12 @@
     					<div class="navbar-header">
     						<a href="home" class="navbar-brand brand"><img src="images/TransparentWhite.png" id="logo"></a>
    						</div>
-   						<ul class="nav navbar-nav navbar-right">
-    						<li class="propClone"><a href="login">Login</a></li>
-    						<li class="propClone"><a href="logout">Log Out</a></li>
-    						<li class="propClone"><a href="signup">Sign Up</a></li>
-    					</ul>
+   							
+    				<form action="${pageContext.servletContext.contextPath}/signup" method="get">
+  						<div> 
+  							<input name="buttonPress" type="submit" value="Create" />
+  						</div>
+					</form>
     					
     					
     				</div><!-- /.container -->
