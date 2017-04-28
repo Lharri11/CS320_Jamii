@@ -55,7 +55,7 @@
 	                    
 	                    <form action="${pageContext.servletContext.contextPath}/user" method="get">
   							<div id="navbar-collapse-02" class="collapse navbar-collapse" >
-    							<input name="buttonPress" type="submit" value="Logout">
+    							<input name="buttonPress" id="generalSubmit" type="submit" value="Logout">
     						</div> 
 						</form>
 						
@@ -85,11 +85,11 @@
     			
     				
     				<div class="sidebar">
-    					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Click Me</button>
+    					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Group Options</button>
     					<div id="sideBar" style="right: -300px;">
     						<ul class="list-unstyled groupList">
-  								<li class="groupListItem"><a href="#">Make a new group</a></li>
- 							 	<li class="groupListItem">Group option</li>
+  								<li class="groupListItem"><a href="http://localhost:8081/Jamii/group" style="color: white">Enter Main Group</a></li>
+ 							 	<li class="groupListItem">Create New Group</li>
   								<li class="groupListItem">Group option</li>
 							</ul>
     					</div>

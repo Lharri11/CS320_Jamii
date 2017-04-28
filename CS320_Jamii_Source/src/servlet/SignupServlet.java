@@ -23,7 +23,7 @@ public class SignupServlet extends HttpServlet {
 		String button = req.getParameter("buttonPress");
 		
 		if(button != null){
-			if(button.toLowerCase().equals("create")){
+			if(button.toLowerCase().equals("sign up")){
 				req.setAttribute("username", username);
 				req.setAttribute("password", password);
 				req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);
@@ -47,7 +47,7 @@ public class SignupServlet extends HttpServlet {
 				if(loggedin){
 					
 					req.setAttribute("account", login.returnAccountForUsername(username));
-					req.getRequestDispatcher("/_view/signup .jsp").forward(req, resp);
+					req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);
 				}
 				else{
 					req.setAttribute("username",username);

@@ -55,7 +55,7 @@
 	                    
     					<div id="navbar-collapse-02" class="collapse navbar-collapse">
     						<ul class="nav navbar-nav navbar-right">
-    							<li class="propClone"><a href="#"><img src="images/user.png" class="tabIcon"></a></li>
+    							<li class="propClone"><a href="http://localhost:8081/Jamii/user"><img src="images/user.png" class="tabIcon"></a></li>
     							<li class="propClone"><a href="#"><img src="images/gear.png" class="tabIcon"></a></li>
     							<li class="propClone"><a href="#"><img src="images/logout.png" class="tabIcon"></a></li>
     						</ul>
@@ -84,11 +84,11 @@
     				</div>
     				
     				<div class="sidebar">
-    					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Click Me</button>
+    					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Group Options</button>
     					<div id="sideBar" style="right: -300px;">
     						<ul class="list-unstyled groupList">
-  								<li class="groupListItem"><a href="#">Make a new group</a></li>
- 							 	<li class="groupListItem">Group option</li>
+  								<li class="groupListItem"><a href="http://localhost:8081/Jamii/group" style="color: white">Enter Main Group</a></li>
+ 							 	<li class="groupListItem">Create New Group</li>
   								<li class="groupListItem">Group option</li>
 							</ul>
     					</div>

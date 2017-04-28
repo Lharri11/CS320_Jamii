@@ -915,6 +915,10 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 	}
 }
 
+p.bold{
+font-weight: bold;
+}
+
 #searchText{
 display:block;
 float:left;
@@ -940,7 +944,7 @@ margin:auto;
 
 #username{
 float:left;
-width:300px;
+width:100%;
 margin:10px;
 }
 
@@ -978,14 +982,29 @@ border:none;
 height:40px;
 }
 
+#generalSubmit{
+float:right !important;
+width:75px;
+background-color:#681ec1;
+color:white;
+}
+
 .tabIcon{
 width:30px;
 height:30px;}
 
+#generalSubmitContainer{
+position:relative;
+width:25%;
+height:30px;
+float:right !important;
+top:35px;
+}
+
 #coverPhotoContainer{
 background-color:grey;
 position:absolute;
-top:80px;
+top:75px;
 width:100%;
 height:300px;
 }
@@ -998,12 +1017,74 @@ width:auto;
 margin:auto;
 }
 
+.postForm{
+display:block;
+width:500px;
+height:160px;
+margin:auto;
+position:relative;
+top:480px;
+background-color:white;
+border: 1px solid #dddfe2;
+padding:13px;
+}
+
+.postPhotos{
+float:left;
+width:50px;
+height:50px;
+border: 2px solid #681ec1;
+border-radius: 100px;
+display:block;
+margin-right:13px;
+}
+
+
+#newPost{
+float:left;
+display:block;
+border:none;
+width:400px;
+height:100px;
+}
+
+#postSubmit{
+float:right;
+width:80px;
+display:block;
+margin:auto;
+background-color:#681ec1;
+color:white;
+border:none;
+height:30px;
+margin-top:5px;
+}
+
+.aPost{
+display:block;
+width:600px;
+min-height:160px;
+margin:auto;
+background-color:white;
+border: 1px solid #dddfe2;
+padding:13px;
+position:relative;
+top:500px;
+margin-bottom:20px;
+}
+
+.postText {
+position: relative;
+left: 10px;
+padding-top: 10px;
+}
+
 .pageInfo{
-position:fixed;
+position:relative;
 width:100%;
 height:50px;
 background-color:#ccc;
-top:380px;
+top:375px;
 }
 .pageInfo a:link{
 color:#681ec1;
@@ -1028,9 +1109,7 @@ font-size: 30px;
 padding:0px;
 }
 
-#pageLinks{
-margin-top:17px;
-}
+#pageLinks{}
 
 #logo{
 float:left;
@@ -1055,7 +1134,7 @@ left:600px;
 #toggle{
 background: rgba(104, 30, 193, 0.8);
 height:200px;
-width:40px;
+width:60px;
 position:fixed;
 right:0%;
 border:none;
@@ -1093,12 +1172,16 @@ color:white;
 .groupListItem{
 text-align:center;
 width:100%;
+color:white;
 height:50px;
 padding:10px;
 border-bottom: 1px solid black;
 }
 
-.groupListItem a:link{color: white;}
+a.nav-link:link{
+color: white;
+text-decoration: none;
+}
 
 #userPhoto{
 display:block;
@@ -1114,10 +1197,20 @@ border-radius: 100px;
 #userName{
 display:block;
 position:relative;
-width:200px;
+width:100%;
 margin:auto;
 font-size: 30px;
+text-align: center;
 padding:0px;
+}
+
+#centerDiv{
+float:left;
+display:block;
+position:relative;
+width:100%;
+height:20px;
+text-align: center;
 }
 
 #bio{
