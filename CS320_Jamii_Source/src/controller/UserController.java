@@ -47,6 +47,16 @@ public class UserController {
 		}			
 
 	}
+	
+	public int getGroupIDbyGroupname(String name) throws SQLException{
+		List<Group> group = database.getGroupbyGroupName(name);
+		int groupID = 0;
+		groupID = group.get(0).getGroupId();
+		System.out.println(groupID);
+		return groupID;
+		
+	}
+	
 }
 
 

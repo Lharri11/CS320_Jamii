@@ -8,6 +8,7 @@ import database.DerbyDatabase;
 import database.IDatabase;
 import model.Account;
 import model.Group;
+import model.Post;
 
 public class GroupController {
 
@@ -28,9 +29,9 @@ public class GroupController {
 
 		// get the list of (Author, Book) pairs from DB
 		List<Group> groups = database.getGroupsByUser(user);
-		for(int x = 0; x < groups.size(); x++){
-			System.out.println(groups.get(x).getName());
-		}
+		//for(int x = 0; x < groups.size(); x++){
+		//	System.out.println(groups.get(x).getName());
+		//}
 
 		if (groups.isEmpty()) {
 			System.out.println("No groups in database for that user");
@@ -40,6 +41,10 @@ public class GroupController {
 			return groups;
 		}			
 
+	}
+	
+	public List<Post> getpostsbyUserandGroups(String user){
+		return null;
 	}
 	
 }

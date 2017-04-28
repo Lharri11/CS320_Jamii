@@ -5,6 +5,7 @@ public class Post {
 	private int postId;
 	private int accountId;
 	private String text;
+	private int groupID;
 	// date time at later date
 	// image or picture
 	
@@ -24,6 +25,10 @@ public class Post {
 		this.text = text;
 	}
 	
+	public void setGroupID(int ID){
+		this.groupID = ID;
+	}
+	
 	public int getPostId() {
 		return postId;
 	}
@@ -35,6 +40,10 @@ public class Post {
 	//getters
 	public String getText(){
 		return this.text;
+	}
+	
+	public int getgroupID(){
+		return this.groupID;
 	}
 	
 }

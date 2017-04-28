@@ -73,15 +73,18 @@
     				<div class="pageInfo" style="height:100px;">
     					<p id="userName"> ${account.name} </p>
     					<div id="bio">This is where the user's bio will go</div>
-    					<div id="pageInfo" style="height:100px;">
+    					<form id="GroupGet" method = "post">
+>    					<div id="pageInfo" style="height:100px;">
     					<table style="width:100%;">
 			    			<c:forEach items="${groups}" var="group">
 			        			<td class="titleCol">${group.name}</td>
+			        			<input type="Submit" value=${group.name} id="Submit" name="Submit">
 			        			<td class="descriptionCol">${group.description}</td>
 			        			<td class="ratingCol">${group.rating}</td>	
 			    			</c:forEach>
 						</table>
 						</div>
+						</form>
     				</div>
     			
     				
@@ -89,10 +92,18 @@
     					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Click Me</button>
     					<div id="sideBar" style="right: -300px;">
     						<ul class="list-unstyled groupList">
+								<form id="GroupGet" method = "post">
+								<c:forEach items="${groups}" var="group">
+			        				<li><td class="groupListItem"><input class="groupListItem" type="Submit" value=${group.name} id="Submit" name="Submit"></td></li>
+			    				</c:forEach>  								
+  								</form>
+  								
+  								
   								<li class="groupListItem"><a href="#">Make a new group</a></li>
- 							 	<li class="groupListItem">Group option</li>
-  								<li class="groupListItem">Group option</li>
+ 							 	<li class="groupListItem"> 	q</li>
+  								<li class="groupListItem"></li>
 							</ul>
+							<input type="Submit" value=${group.name} id="Submit" name="Submit">
     					</div>
     				</div>
     			</div>

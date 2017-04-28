@@ -18,4 +18,5 @@ public interface IDatabase {
 	public String queryForPasswordByUsername(String username);
 	public List<Group> getGroupsByUser(String user);
 	public boolean insertNewAccountIntoDatabase(Account newb);
+	public List<Group> getGroupbyGroupName(String name);
 }

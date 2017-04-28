@@ -103,6 +103,7 @@ public class InitialData {
 				Post post = new Post(null);
 				post.setPostId(postId++);
 				post.setAccountId(Integer.parseInt(i.next()));
+				post.setGroupID(Integer.parseInt(i.next()));
 				post.setText(i.next());
 				postList.add(post);
 			}

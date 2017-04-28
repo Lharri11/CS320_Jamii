@@ -28,19 +28,19 @@ public class DerbyDatabase implements IDatabase {
 			throw new IllegalStateException("Could not load Derby driver");
 		}
 	}
-	
+
 	private interface Transaction<ResultType> {
 		public ResultType execute(Connection conn) throws SQLException;
 	}
 
 	private static final int MAX_ATTEMPTS = 10;
-	
+
 	private interface Query<ReturnType>{
 		public ReturnType query(Connection conn) throws SQLException;
 	}
 
 	/* ----------------------------------------------Query Functions---------------------------------------------- */
-	 
+
 	public int queryForLoginIdByUsername(String username){
 		try{
 			return doQueryLoop(new Query<Integer>(){
@@ -52,10 +52,10 @@ public class DerbyDatabase implements IDatabase {
 					try{
 						stmt = conn.prepareStatement(
 								" SELECT login_id FROM accounts "
-								+ " WHERE username = ?");
+										+ " WHERE username = ?");
 						stmt.setString(1, username);
 						set = stmt.executeQuery();
-						
+
 						if(set.next()){
 							loginId = set.getInt(1);
 						}
@@ -71,7 +71,7 @@ public class DerbyDatabase implements IDatabase {
 			return -1;
 		}
 	}
-	
+
 	public boolean updateAccountByUsername(String username, Account account){
 		try{
 			return doQueryLoop(new Query<Boolean>(){
@@ -79,7 +79,7 @@ public class DerbyDatabase implements IDatabase {
 				public Boolean query(Connection conn)throws SQLException{
 					if(verifyAccountExistsByUsername(conn,username))
 						return updateAccountByUsername(conn, username,account);
-					
+
 					else 
 						return false;
 				}
@@ -89,30 +89,73 @@ public class DerbyDatabase implements IDatabase {
 			return false;
 		}
 	}
-	
+
+	public List<Group> getGroupbyGroupName(String name){
+		return executeTransaction(new Transaction<List<Group>>() {
+			public List<Group> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet set = null;
+
+
+
+				try{
+					stmt1 = conn.prepareStatement("select groups.group_id, groups.name, groups.description, groups.rating from groups where groups.name = ?");
+					stmt1.setString(1, name);
+					set = stmt1.executeQuery();
+
+
+					List<Group> returnGroup = new ArrayList<Group>();
+					Boolean found = false;
+
+					while(set.next()) {
+						found = true;
+						Group group = new Group();
+
+						loadGroup(group, set, 1);
+						returnGroup.add(group);
+					}
+					if (!found) {
+						System.out.println("<" + name + "> is not a group");
+					}
+
+					return returnGroup;
+				}
+				finally{
+					DBUtil.closeQuietly(set);
+					DBUtil.closeQuietly(stmt1);		
+				}
+
+			}
+		});
+
+
+
+
+	}
+
 	public List<Group> getGroupsByUser(final String user){
 		return executeTransaction(new Transaction<List<Group>>() {
 			@Override
 			public List<Group> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				ResultSet set = null;
-				
+
 				try{
-					
+
 					stmt1 = conn.prepareStatement(
 							"select groups.group_id, groups.name, groups.description, groups.rating from groups, accounts, groupMembers where accounts.username = ? and accounts.account_id = groupMembers.account_id and groupMembers.group_id = groups.group_id"
 							);
 					stmt1.setString(1, user);
-					
+
 					set = stmt1.executeQuery();
-					
+
 					List<Group> returnGroups = new ArrayList<Group>();
 					Boolean found = false;
 
 					while(set.next()) {
 						found = true;
 						Group group = new Group();
-						
+
 						loadGroup(group, set, 1);
 						returnGroups.add(group);
 					}
@@ -130,7 +173,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 
-	
+
 	public String queryForPasswordByUsername(String username){
 		try{
 			return doQueryLoop(new Query<String>(){
@@ -146,7 +189,7 @@ public class DerbyDatabase implements IDatabase {
 			return null;
 		}
 	}
-	
+
 	public Account queryForUserAccountByUsername(String username){
 		try{
 			return doQueryLoop(new Query<Account>(){
@@ -164,7 +207,7 @@ public class DerbyDatabase implements IDatabase {
 			return null;
 		}
 	}
-	
+
 	public boolean insertNewAccountIntoDatabase(Account account){
 		try{
 			return doQueryLoop(new Query<Boolean>(){
@@ -173,7 +216,7 @@ public class DerbyDatabase implements IDatabase {
 					boolean success = false;
 					if(!verifyAccountExistsByUsername(conn, account.getUsername())){
 						if(insertAccountIntoAccounts(conn,account));
-							success = true;
+						success = true;
 					}
 					return success;
 				}
@@ -187,7 +230,7 @@ public class DerbyDatabase implements IDatabase {
 	/*
 	 * -----------------------HELPER METHODS FOR STREAMLINING SQL QUERIES----------------------------------------------------
 	 */	
-	
+
 	private boolean updateAccountByUsername(Connection conn, String username, Account account) throws SQLException{
 		boolean success = false;
 		PreparedStatement stmt = null;
@@ -196,8 +239,8 @@ public class DerbyDatabase implements IDatabase {
 		try{
 			stmt = conn.prepareStatement(
 					"UPDATE accounts "
-					+ " SET username = ?, password = ?, login_id = ?, name = ?, email = ?, phonenumber = ? "
-					+ " WHERE username = ? ");
+							+ " SET username = ?, password = ?, login_id = ?, name = ?, email = ?, phonenumber = ? "
+							+ " WHERE username = ? ");
 			stmt.setString(1, account.getUsername());
 			stmt.setString(2, account.getPassword());
 			stmt.setInt(3, account.getLoginId());
@@ -206,17 +249,17 @@ public class DerbyDatabase implements IDatabase {
 			stmt.setString(6, account.getPhoneNumber());
 			stmt.setString(7, username);
 			stmt.executeUpdate();
-			
+
 			//get user_id
 			stmt2 = conn.prepareStatement(
 					"SELECT account_id FROM accounts "
-					+ " WHERE username = ?");
+							+ " WHERE username = ?");
 			stmt2.setString(1, account.getUsername());
 			set = stmt2.executeQuery();
-			
-			
-				success = true;
-			
+
+
+			success = true;
+
 		}finally{
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(stmt2);
@@ -224,7 +267,7 @@ public class DerbyDatabase implements IDatabase {
 		}
 		return success;
 	}
-	
+
 	private Account getAccountFromUsername(Connection conn, String username) throws SQLException{
 		Account account = null;
 		PreparedStatement stmt = null;
@@ -232,23 +275,23 @@ public class DerbyDatabase implements IDatabase {
 		try{
 			stmt = conn.prepareStatement(
 					" SELECT * FROM accounts "
-					+" WHERE username=?");
+							+" WHERE username=?");
 			stmt.setString(1, username);
-			
-		
+
+
 			set = stmt.executeQuery();
 			set.next();
-			
+
 			account = new Account(username, username, 0, username, username, username);
 			loadAccount(account, set, 1);
-			
+
 		}finally{
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(set);
 		}
 		return account;
 	}
-	
+
 	private Account getAccountFromUserId(Connection conn, int userId) throws SQLException{
 		Account account = null;
 		PreparedStatement stmt = null;
@@ -256,18 +299,18 @@ public class DerbyDatabase implements IDatabase {
 		try{
 			stmt = conn.prepareStatement(
 					" SELECT * FROM accounts "
-					+" WHERE user_id=?");
+							+" WHERE user_id=?");
 			stmt.setInt(1, userId);
-			
+
 			set = stmt.executeQuery();
-			
+
 		}finally{
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(set);
 		}
 		return account;
 	}
-	
+
 	private String getPasswordByUsername(Connection conn,String username) throws SQLException{
 		String password = null;
 		PreparedStatement stmt = null;
@@ -277,7 +320,7 @@ public class DerbyDatabase implements IDatabase {
 					" SELECT password FROM accounts WHERE username=? ");
 			stmt.setString(1,username);
 			set = stmt.executeQuery();
-			
+
 			if(set.next()){
 				password = set.getString(1);
 			}
@@ -287,32 +330,32 @@ public class DerbyDatabase implements IDatabase {
 		}
 		return password;
 	}
-	
+
 	private boolean insertAccountIntoAccounts(Connection conn, Account account) throws SQLException{
 		boolean success = false;
 		PreparedStatement stmt1 = null;
 		PreparedStatement stmt2 = null;
 		ResultSet set = null;
-		
+
 		try{
 			stmt1 = conn.prepareStatement(
 					"INSERT INTO accounts (username, password, login_id, name, email, phone_number) "
-					+ " VALUES(?,?,?,?,?,?,?)");
+							+ " VALUES(?,?,?,?,?,?,?)");
 			stmt1.setString(1, account.getUsername());
 			stmt1.setString(2, account.getPassword());
 			stmt1.setInt(3, account.getLoginId());
 			stmt1.setString(4, account.getName());
 			stmt1.setString(5, account.getEmail());
 			stmt1.setString(6, account.getPhoneNumber());
-			
+
 			stmt1.executeUpdate();
-			
+
 			stmt2 = conn.prepareStatement(
 					"SELECT account_id FROM accounts "
-					+ " WHERE username = ?");
+							+ " WHERE username = ?");
 			stmt2.setString(1, account.getUsername());
 			set = stmt2.executeQuery();
-			
+
 		}finally{
 			DBUtil.closeQuietly(stmt1);
 			DBUtil.closeQuietly(stmt2);
@@ -320,12 +363,12 @@ public class DerbyDatabase implements IDatabase {
 		}
 		return success;
 	}
-	
+
 	private boolean verifyAccountExistsByUsername(Connection conn, String username) throws SQLException{
 		boolean registered = false;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
-		
+
 		try{
 			stmt = conn.prepareStatement(
 					"SELECT * from accounts WHERE username=? ");
@@ -349,12 +392,12 @@ public class DerbyDatabase implements IDatabase {
 		account.setName(set.getString(index++));
 		account.setEmail(set.getString(index++));
 		account.setPhoneNumber(set.getString(index++));
-		
+
 		return account;
 	}
-	
+
 	/* ---------------------------- ------------------------------*/
-	
+
 	private <ReturnType> ReturnType doQueryLoop(Query<ReturnType> query) throws SQLException{
 		Connection conn = connect();
 
@@ -384,7 +427,7 @@ public class DerbyDatabase implements IDatabase {
 			DBUtil.closeQuietly(conn);
 		}
 	}
-	
+
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);
@@ -392,15 +435,15 @@ public class DerbyDatabase implements IDatabase {
 			throw new PersistenceException("Transaction failed", e);
 		}
 	}
-	
+
 	public<ResultType> ResultType doExecuteTransaction(Transaction<ResultType> txn) throws SQLException {
 		Connection conn = connect();
-		
+
 		try {
 			int numAttempts = 0;
 			boolean success = false;
 			ResultType result = null;
-			
+
 			while (!success && numAttempts < MAX_ATTEMPTS) {
 				try {
 					result = txn.execute(conn);
@@ -416,11 +459,11 @@ public class DerbyDatabase implements IDatabase {
 					}
 				}
 			}
-			
+
 			if (!success) {
 				throw new SQLException("Transaction failed (too many retries)");
 			}
-			
+
 			// Success!
 			return result;
 		} finally {
@@ -430,14 +473,14 @@ public class DerbyDatabase implements IDatabase {
 
 	public Connection connect() throws SQLException {
 		Connection conn = DriverManager.getConnection("jdbc:derby:test.db;create=true");
-		
+
 		// Set autocommit to false to allow execution of
 		// multiple queries/statements as part of the same transaction.
 		conn.setAutoCommit(false);
-		
+
 		return conn;
 	}
-	
+
 	private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
 		account.setUserId(resultSet.getInt(index++));
 		account.setUsername(resultSet.getString(index++));
@@ -447,21 +490,21 @@ public class DerbyDatabase implements IDatabase {
 		account.setEmail(resultSet.getString(index++));
 		account.setPhoneNumber(resultSet.getString(index++));
 	}
-	
+
 	private void loadGroup(Group group, ResultSet resultSet, int index) throws SQLException {
 		group.setGroupId(resultSet.getInt(index++));
 		group.setName(resultSet.getString(index++));
 		group.setDescription(resultSet.getString(index++));
 		group.setRating(resultSet.getInt(index++));
-				
+
 	}
-	
+
 	private void loadGroupMember(GroupMember groupMember, ResultSet resultSet, int index) throws SQLException {
 		groupMember.setMemberId(resultSet.getInt(index++));
 		groupMember.setGroupId(resultSet.getInt(index++));
 		groupMember.setAccountId(resultSet.getInt(index++));		
 	}
-	
+
 	public boolean createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -470,54 +513,55 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				PreparedStatement stmt4 = null;
-				
+
 				try {
 					stmt1 = conn.prepareStatement(
-						"create table accounts (" +
-						"	account_id integer primary key " +
-						"		generated always as identity (start with 1, increment by 1), " +									
-						"	username varchar(40)," +
-						"	password varchar(40)," +
-						"   login_id integer," +
-						"	name varchar(20)," +
-						"	email varchar(50)," +
-						"	phonenumber varchar(25)" +
-						")"
-					);	
-					
+							"create table accounts (" +
+									"	account_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +									
+									"	username varchar(40)," +
+									"	password varchar(40)," +
+									"   login_id integer," +
+									"	name varchar(20)," +
+									"	email varchar(50)," +
+									"	phonenumber varchar(25)" +
+									")"
+							);	
+
 					stmt1.executeUpdate();
-					
+
 					stmt2 = conn.prepareStatement(
 							"create table groups (" +
-							"	group_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
-							"	name varchar(70)," +
-							"	description varchar(150)," +
-							"   rating integer " +
-							")"
-					);
+									"	group_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	name varchar(70)," +
+									"	description varchar(150)," +
+									"   rating integer " +
+									")"
+							);
 					stmt2.executeUpdate();
-					
+
 					stmt3 = conn.prepareStatement(
 							"create table groupMembers (" +
-							"	member_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
-							"	group_id integer constraint group_id references groups, " +
-							"	account_id integer constraint account_id references accounts " +
-							")"
-					);
+									"	member_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	group_id integer constraint group_id references groups, " +
+									"	account_id integer constraint account_id references accounts " +
+									")"
+							);
 					stmt3.executeUpdate();
-					
+
 					stmt4 = conn.prepareStatement(
 							"create table posts (" +
-							"	post_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
-							"	account_id integer constraint post_account_id references accounts, " +
-							"   text varchar(500) " +
-							")"
-					);
+									"	post_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	account_id integer constraint post_account_id references accounts, " +
+									" group_id integer constraint post_group_id references groups, " +
+									"   text varchar(500) " +
+									")"
+							);
 					stmt4.executeUpdate();
-					
+
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -529,7 +573,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 		return true;
 	}
-	
+
 	public boolean dropTables(){
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -538,21 +582,21 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				PreparedStatement stmt4 = null;
-		
+
 
 				try{
 					stmt1 = conn.prepareStatement("DROP TABLE groupMembers");
 					stmt2 = conn.prepareStatement("DROP TABLE posts");
 					stmt3 = conn.prepareStatement("DROP TABLE accounts");
 					stmt4 = conn.prepareStatement("DROP TABLE groups");
-					
-					
-			
+
+
+
 					stmt1.executeUpdate();
 					stmt2.executeUpdate();
 					stmt3.executeUpdate();
 					stmt4.executeUpdate();
-						
+
 					conn.commit();
 				}catch(SQLException e){
 					System.out.println(e.getMessage());
@@ -566,7 +610,7 @@ public class DerbyDatabase implements IDatabase {
 		return true;
 	}
 
-	
+
 	public void loadInitialData() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -575,7 +619,7 @@ public class DerbyDatabase implements IDatabase {
 				List<Group> groupList;
 				List<GroupMember> groupMemberList;
 				List<Post> postList;
-				
+
 				try {
 					accountList = InitialData.getAccounts();
 					groupList = InitialData.getGroups();
@@ -594,7 +638,7 @@ public class DerbyDatabase implements IDatabase {
 					// populate accounts table (accounts first, since account_id is foreign key in groupMembers table)
 					insertAccount = conn.prepareStatement("insert into accounts (username, password, login_id, name, email, phonenumber) values (?, ?, ?, ?, ?, ?)");
 					for (Account account : accountList) {
-//						insertAccount.setInt(1, account.getUserId());	// auto-generated primary key, don't insert this
+						//						insertAccount.setInt(1, account.getUserId());	// auto-generated primary key, don't insert this
 						insertAccount.setString(1, account.getUsername());
 						insertAccount.setString(2, account.getPassword());
 						insertAccount.setInt(3, account.getLoginId());
@@ -604,35 +648,36 @@ public class DerbyDatabase implements IDatabase {
 						insertAccount.addBatch();
 					}
 					insertAccount.executeBatch();
-					
+
 					insertGroup = conn.prepareStatement("insert into groups (name, description, rating) values (?, ?, ?)");
 					for (Group group : groupList) {
-//						insertGroup.setInt(1, group.getGroupId());		// auto-generated primary key, don't insert this
+						//						insertGroup.setInt(1, group.getGroupId());		// auto-generated primary key, don't insert this
 						insertGroup.setString(1, group.getName());
 						insertGroup.setString(2, group.getDescription());
 						insertGroup.setInt(3, group.getRating());
 						insertGroup.addBatch();
 					}
 					insertGroup.executeBatch();
-					
+
 					insertGroupMember = conn.prepareStatement("insert into groupMembers (group_id, account_id) values (?, ?)");
 					for (GroupMember groupMember : groupMemberList) {
-//						insertGroupMember.setInt(1, groupMember.getMemberId());		// auto-generated primary key, don't insert this
+						//						insertGroupMember.setInt(1, groupMember.getMemberId());		// auto-generated primary key, don't insert this
 						insertGroupMember.setInt(1, groupMember.getGroupId());
 						insertGroupMember.setInt(2, groupMember.getAccountId());
 						insertGroupMember.addBatch();
 					}
 					insertGroupMember.executeBatch();
-					
-					insertPost = conn.prepareStatement("insert into posts (account_id, text) values (?, ?)");
+
+					insertPost = conn.prepareStatement("insert into posts (account_id, group_id, text) values (?, ?, ?)");
 					for (Post post : postList) {
-//						insertPost.setInt(1, post.getPostId());		// auto-generated primary key, don't insert this
+						//						insertPost.setInt(1, post.getPostId());		// auto-generated primary key, don't insert this
 						insertPost.setInt(1, post.getAccountId());
-						insertPost.setString(2, post.getText());
+						insertPost.setInt(2, post.getgroupID());
+						insertPost.setString(3, post.getText());
 						insertPost.addBatch();
 					}
 					insertPost.executeBatch();
-					
+
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertAccount);
@@ -643,22 +688,22 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	/*
 	// The main method creates the database tables and loads the initial data.
 		public static void main(String[] args) throws IOException {
 			System.out.println("Creating tables...");
 			DerbyDatabase db = new DerbyDatabase();
 			db.createTables();
-			
+
 			System.out.println("Loading initial data...");
 			db.loadInitialData();
-			
+
 			System.out.println("Success!");
 		}
-	*/
-		
-	
+	 */
+
+
 	public static void main(String[] args) throws SQLException {
 		System.out.println("----Loading Database Driver---- ");
 		DatabaseProvider.setInstance(new DerbyDatabase());
@@ -669,7 +714,7 @@ public class DerbyDatabase implements IDatabase {
 
 		System.out.println("(C)reate table or (D)rop tables: ");
 		Scanner in = new Scanner(System.in);
-		
+
 		if(in.nextLine().toUpperCase().equals("C")){
 			System.out.println("----Creating Tables---- ");
 			if(db.createTables()){
@@ -694,5 +739,5 @@ public class DerbyDatabase implements IDatabase {
 		in.close();
 		DBUtil.closeQuietly(conn);
 	}
-	
+
 }
