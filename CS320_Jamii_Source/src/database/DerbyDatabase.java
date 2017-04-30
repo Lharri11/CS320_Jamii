@@ -89,6 +89,9 @@ public class DerbyDatabase implements IDatabase {
 			return false;
 		}
 	}
+	
+	
+	
 
 	public List<Group> getGroupbyGroupName(String name){
 		return executeTransaction(new Transaction<List<Group>>() {
@@ -132,6 +135,96 @@ public class DerbyDatabase implements IDatabase {
 
 
 	}
+	
+	
+	
+	
+	public List<Group> getGroupbyGroupID(int ID){
+		return executeTransaction(new Transaction<List<Group>>() {
+			public List<Group> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet set = null;
+				
+				try{
+					stmt1 = conn.prepareStatement(
+							" select * from groups where groups.group_id = ?"
+							);
+					stmt1.setInt(1, ID);	
+					
+					set = stmt1.executeQuery();
+					
+					List<Group> returnGroups = new ArrayList<Group>();
+					Boolean found = false;
+
+					while(set.next()) {
+						found = true;
+						Group group = new Group();
+
+						loadGroup(group, set, 1);
+						returnGroups.add(group);
+					}
+
+					if (!found) {
+						System.out.println("<" + ID + "> is not in the database");
+					}
+					return returnGroups;
+				}	finally{
+					DBUtil.closeQuietly(set);
+					DBUtil.closeQuietly(stmt1);		
+				}
+				
+				
+				
+			}
+		});
+	}		
+				
+				
+	
+	public List<Post> getPostsbyGroupID(int ID) {
+		return executeTransaction(new Transaction<List<Post>>() {
+			public List<Post> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet set = null;
+				
+				try{
+					stmt1 = conn.prepareStatement(
+							" select * from posts where posts.group_id = ?"
+							);
+					stmt1.setInt(1, ID);	
+					
+					set = stmt1.executeQuery();
+					
+					List<Post> returnPosts = new ArrayList<Post>();
+					Boolean found = false;
+
+					while(set.next()) {
+						found = true;
+						Post post = new Post();
+
+						loadPost(post, set, 1);
+						returnPosts.add(post);
+					}
+
+					if (!found) {
+						System.out.println("<" + ID + "> is not in the database");
+					}
+					return returnPosts;
+				}	finally{
+					DBUtil.closeQuietly(set);
+					DBUtil.closeQuietly(stmt1);		
+				}
+				
+				
+				
+			}
+		});
+		
+		
+		
+	}			
+				
+				
 
 	public List<Group> getGroupsByUser(final String user){
 		return executeTransaction(new Transaction<List<Group>>() {
@@ -220,6 +313,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					return success;
 				}
+				
 			});
 		}catch(SQLException e){
 			System.out.println("insertNewAccountIntoDatabase: "+e.getMessage());
@@ -339,8 +433,8 @@ public class DerbyDatabase implements IDatabase {
 
 		try{
 			stmt1 = conn.prepareStatement(
-					"INSERT INTO accounts (username, password, login_id, name, email, phone_number) "
-							+ " VALUES(?,?,?,?,?,?,?)");
+					"INSERT INTO accounts (username, password, login_id, name, email, phonenumber) "
+							+ " VALUES(?,?,?,?,?,?)");
 			stmt1.setString(1, account.getUsername());
 			stmt1.setString(2, account.getPassword());
 			stmt1.setInt(3, account.getLoginId());
@@ -503,6 +597,14 @@ public class DerbyDatabase implements IDatabase {
 		groupMember.setMemberId(resultSet.getInt(index++));
 		groupMember.setGroupId(resultSet.getInt(index++));
 		groupMember.setAccountId(resultSet.getInt(index++));		
+	}
+	
+	
+	private void loadPost(Post post, ResultSet resultSet, int index) throws SQLException {
+		post.setPostId(resultSet.getInt(index++));
+		post.setAccountId(resultSet.getInt(index++));
+		post.setGroupID(resultSet.getInt(index++));
+		post.setText(resultSet.getString(index++));
 	}
 
 	public boolean createTables() {
@@ -739,5 +841,7 @@ public class DerbyDatabase implements IDatabase {
 		in.close();
 		DBUtil.closeQuietly(conn);
 	}
+
+	
 
 }

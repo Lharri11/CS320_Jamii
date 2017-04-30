@@ -34,6 +34,7 @@ public class UserController {
 		
 		// get the list of (Author, Book) pairs from DB
 		List<Group> groups = database.getGroupsByUser(user);
+		System.out.println("Users Groups:");
 		for(int x = 0; x < groups.size(); x++){
 			System.out.println(groups.get(x).getName());
 		}
@@ -52,7 +53,7 @@ public class UserController {
 		List<Group> group = database.getGroupbyGroupName(name);
 		int groupID = 0;
 		groupID = group.get(0).getGroupId();
-		System.out.println(groupID);
+		System.out.println("Redirecting to "+groupID);
 		return groupID;
 		
 	}

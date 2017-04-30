@@ -101,13 +101,12 @@
                 			<input type="Submit" value="Post" id="postSubmit" name="postSubmit">
     					</form>  
     				</div>
-    				
-    				<div class="aPost">
-    					<img src="images/userTest.jpg" class="postPhotos">
+    				<table>
+    				<c:forEach items="${posts}" var="Post">
     					<a class="name" href="#">Alyssa McDevitt</a>
-    					<h6 class="date">April 29, 2017, 3:23 PM</h6>
-    					<h4 class="postText">Test</h4>
- 					</div>
+    					<td class="textCol">${Post.text}</td>
+ 					</c:forEach>
+ 					</table>
     			</div>
     			
     			

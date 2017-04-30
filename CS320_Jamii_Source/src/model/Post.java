@@ -13,6 +13,10 @@ public class Post {
 		this.text = text;
 	}
 	
+	public Post(){
+		this.text = "";
+	}
+	
 	public void setPostId(int postId) {
 		this.postId = postId;
 	}

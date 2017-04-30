@@ -15,6 +15,7 @@ import database.DerbyDatabase;
 import database.IDatabase;
 import model.Account;
 import model.Group;
+import model.Post;
 
 public class DerbyDatabaseTest {
 
@@ -24,7 +25,10 @@ public class DerbyDatabaseTest {
 	public void setUp() throws Exception {
 		
 		DatabaseProvider.setInstance(new DerbyDatabase());
-		db = DatabaseProvider.getInstance();		
+		db = DatabaseProvider.getInstance();
+		db.dropTables();
+		db.createTables();
+		db.loadInitialData();
 	}
 	
 	
@@ -47,7 +51,7 @@ public class DerbyDatabaseTest {
 	@Test //Need to fix commas after phone number	//This test also calls loadaccount method
 	public void testqeueryForUserAccountsByUsername(){
 		System.out.println("Testing: queryForUserAccountByUsername");
-		Account admin1 = new Account("admin1", "password1", -1, "a_name1", "admin1@ycp.edu", "717-123-4567,,,,");
+		Account admin1 = new Account("admin1", "password1", -1, "a_name1", "admin1@ycp.edu", "717-123-4567");
 		Account test = db.queryForUserAccountByUsername("admin1");
 		assertEquals(admin1.getName(), test.getName());
 		assertEquals(admin1.getEmail(), test.getEmail());
@@ -77,7 +81,7 @@ public class DerbyDatabaseTest {
 		assertEquals(failed, false);
 		}
 		finally{
-			Account reset = new Account("admin1", "password1", -1, "a_name1", "admin1@ycp.edu", "717-123-4567,,,,");
+			Account reset = new Account("admin1", "password1", -1, "a_name1", "admin1@ycp.edu", "717-123-4567");
 			db.updateAccountByUsername("admin1s", reset);
 			System.out.println("Passsed");
 		}
@@ -91,6 +95,23 @@ public class DerbyDatabaseTest {
 		Account newb = new Account("ASDF", "ASDF", r, "Adolph", "derfurer@germany.gov", "666-666-6666");
 		boolean passed = db.insertNewAccountIntoDatabase(newb);
 		assertEquals(passed, true);
+		
+		
+	}
+	
+	@Test
+	public void testgetPostsbyGroupID(){
+		Post apost = new Post();
+		apost.setAccountId(1);
+		apost.setGroupID(1);
+		apost.setPostId(1);
+		apost.setText("Admin1_Comment1");
+		List<Post> test = db.getPostsbyGroupID(1);
+		assertEquals(test.get(0).getText(), apost.getText());
+		assertEquals(test.get(0).getgroupID(), apost.getgroupID());
+		assertEquals(test.get(0).getPostId(), apost.getPostId());
+		assertEquals(test.get(0).getText(), apost.getText());
+		
 		
 		
 	}

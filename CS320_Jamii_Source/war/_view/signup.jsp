@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,18 +47,79 @@
     					
     				</div><!-- /.container -->
     			</nav>
-    	
-    		<form id="login" class="login" action="${pageContext.servletContext.contextPath}/login" method="post">
-                <input type="text" id="username" name="username" placeholder="Username" value="${username}" required>
-                <input type="password" id="password" name="password" placeholder="Password" value="${password}" required>
-                <input type="text" id="name" name="name" placeholder="Name" value="${name}" required>
-                <input type="text" id="email" name="email" placeholder="Email" value="${email}" required>
-                <input type="text" id="phone" name="phone" placeholder="Phone Number" value="${email}" required>
-                <input type="Submit" value="Sign Up" id="loginSubmit" name="signupSubmit">
-                
-			</form><!-- /.login -->	
+    				
+    	<div class="signupcontainer">
+			<form action="${pageContext.servletContext.contextPath}/signup" method="post">
+			<table>
+				<tr> <td>Username:</td>
+				<c:if test="${! empty username}">
+					<td><input type="text" id="username" name="username" placeholder="Username" value="${username}"></td>
+				</c:if>
+				
+				<c:if test="${empty username}">
+					<td><input type="text" id="username" name="username" placeholder="Username"></td>
+				</c:if>
+				</tr>
+				
+				<tr> <td> Password:</td>
+				<c:if test="${! empty password}">
+					<td><input type="text" id="password" name="pass1" placeholder="Password" value="${password}">
+				</c:if>
+				
+				<c:if test="${empty password}">
+					<td><input type="text" id="password" name="pass1" placeholder="Password"></td>
+				</c:if>
+				</tr>
+				
+				<tr> <td> Re-Enter:</td>
+				<c:if test="${! empty pass2}">
+					<td><input type="text" id="password" name="pass2" value="${pass2}"></td>
+				</c:if>
+				
+				<c:if test="${empty pass2}">
+					<td><input type="text" id="password" name="pass2" placeholder="Re-enter Password"></td>
+				</c:if>
+				</tr>
+
+				<tr> <td> Name:</td>
+				<c:if test="${! empty name}">
+					<td><input type="text" id="name" name="name" placeholder="Name" value="${name}"></td>
+				</c:if>
+				
+				<c:if test="${empty name}">
+					<td><input type="text" id="name" name="name" placeholder="Name"></td>
+				</c:if>
+				</tr>
+				
+				<tr> <td> Email:</td>
+				<c:if test="${! empty email}">
+					<td><input type="text" id="email" name="email" placeholder="Email" value="${email}"></td>
+				</c:if>
+				
+				<c:if test="${empty email}">
+					<td><input type="text" id="email" name="email" placeholder="Email Address"></td>
+				</c:if>
+				</tr>
+				
+				<tr> <td> Phone Number:</td>
+				<c:if test="${! empty phone}">
+					<td><input type="text" id="phone" name="phone" value="${phone}"></td>
+				</c:if>
+				
+				<c:if test="${empty phone}">
+					<td><input type="text" id="phone" name="phone" placeholder="Phone Number"></td>
+				</c:if>
+				</tr>
+				
+				<tr><td><input type="submit" id="loginSubmit" name="buttonPress" value="Create"></td></tr>
+			</table>
+			<c:if test="${! empty errorMessage}">
+				<tr>${errorMessage}</tr>
+			</c:if>
+			</form><!-- /.login -->
+			</div><!-- /.signup -->
+		</div><!-- /.wrapper -->
 			
-    		</div><!-- /.wrapper -->
     	
     	</header><!-- /.item --></div><!-- /#page -->
     <!-- Load JS here for greater good =============================-->

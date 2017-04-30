@@ -60,6 +60,7 @@ public class UserServlet extends HttpServlet {
 		UserController user = new UserController();
 		String buttonPress = req.getParameter("Submit");
 		
+		
 		if(buttonPress != null){
 			try{
 			groupID = user.getGroupIDbyGroupname(buttonPress);
@@ -71,6 +72,7 @@ public class UserServlet extends HttpServlet {
 			}
 			
 		}
+		
 		
 		
 		

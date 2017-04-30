@@ -6,6 +6,7 @@ import java.util.List;
 import model.Account;
 import model.Group;
 import model.GroupMember;
+import model.Post;
 
 public interface IDatabase {
 	public boolean createTables();
@@ -19,4 +20,6 @@ public interface IDatabase {
 	public List<Group> getGroupsByUser(String user);
 	public boolean insertNewAccountIntoDatabase(Account newb);
 	public List<Group> getGroupbyGroupName(String name);
+	public List<Group> getGroupbyGroupID(int ID);
+	public List<Post> getPostsbyGroupID(int ID);
 }
