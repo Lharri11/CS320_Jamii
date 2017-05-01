@@ -75,7 +75,7 @@
 						</div>
     				</div>
     				<div class="pageInfo">
-    					<div id="rating"> <img src="images/pg.png" id="ratingImage" /> </div>
+    					<div id="rating"> <img src="images/PG.png" id="ratingImage" /> </div>
     					<input type="text" id="changeTitle" placeholder="Change Group Name"/>
     					<div id="pageLinks"> 
     						<a href="#">${group.memberCount} Members</a> |

@@ -15,7 +15,7 @@ public class EditGroupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-			req.getRequestDispatcher("/_view/editUser.jsp").forward(req, resp);	
+			req.getRequestDispatcher("/_view/editGroup.jsp").forward(req, resp);	
 		}
 
 
@@ -23,6 +23,6 @@ public class EditGroupServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-			req.getRequestDispatcher("/_view/editUser.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/editGroup.jsp").forward(req, resp);
 	}
 }
