@@ -1,7 +1,7 @@
-/controller/
 /database/
+/servlet/
+/controller/
 /jamii_main/
 /junit_database/
 /junit_model/
 /model/
-/servlet/

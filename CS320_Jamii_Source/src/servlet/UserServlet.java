@@ -30,17 +30,6 @@ public class UserServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/login");
 			return;
 		}
-
-		String button = req.getParameter("buttonPress");
-		
-		if(button != null){
-			if(button.toLowerCase().equals("logout")){
-				req.getSession().setAttribute("loggedin",false);
-				req.getSession().setAttribute("username", null);
-				req.getSession().setAttribute("login_id", -1);
-				req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
-			}
-		}
 		
 		List<Group> groups = null;
 		controller = new UserController();
@@ -66,6 +55,20 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		String keyword = null;
+		keyword = req.getParameter("keyword");
+
+		System.out.println("reached");
+		if(keyword!=null){
+			System.out.println("not null, its "+ keyword);
+			req.getSession().setAttribute("keyword", keyword);
+			resp.sendRedirect(req.getContextPath()+"/search");
+			return;
+		}
+		
+		
+		
+			
 			req.getRequestDispatcher("/_view/user.jsp").forward(req, resp);
 	}
 }

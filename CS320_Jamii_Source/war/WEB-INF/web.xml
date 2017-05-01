@@ -25,6 +25,18 @@
   	<servlet-name>GroupServlet</servlet-name>
     <servlet-class>servlet.GroupServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>SearchServlet</servlet-name>
+    <servlet-class>servlet.SearchServlet</servlet-class>
+  </servlet>
+   <servlet>
+  	<servlet-name>EditUserServlet</servlet-name>
+    <servlet-class>servlet.EditUserServlet</servlet-class>
+  </servlet>
+   <servlet>
+  	<servlet-name>EditGroupServlet</servlet-name>
+    <servlet-class>servlet.EditGroupServlet</servlet-class>
+  </servlet>
 
 
   
@@ -49,7 +61,18 @@
     <servlet-name>GroupServlet</servlet-name>
     <url-pattern>/group</url-pattern>
   </servlet-mapping>
-
+  <servlet-mapping>
+    <servlet-name>SearchServlet</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditUserServlet</servlet-name>
+    <url-pattern>/editUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditGroupServlet</servlet-name>
+    <url-pattern>/editGroup</url-pattern>
+  </servlet-mapping>
  
 
 	

@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class SignupServlet extends HttpServlet {
+public class EditUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-			req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);	
+			req.getRequestDispatcher("/_view/editUser.jsp").forward(req, resp);	
 		}
 
 
@@ -23,6 +23,6 @@ public class SignupServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-			req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/editUser.jsp").forward(req, resp);
 	}
 }

@@ -31,17 +31,18 @@ public class UserController {
 	
 	public List<Group> getUsersGroups(String user) throws SQLException {
 
-		List<Group> groups = database.getGroupsByUser(user);
-		for(int x = 0; x < groups.size(); x++){
-			System.out.println(groups.get(x).getName());
+		// get the list of (Author, Book) pairs from DB
+		List<Group> groupsAccounts = database.getGroupsByUser(user);
+		for(int x = 0; x < groupsAccounts.size(); x++){
+			System.out.println(groupsAccounts.get(x).getName());
 		}
 
-		if (groups.isEmpty()) {
+		if (groupsAccounts.isEmpty()) {
 			System.out.println("No groups in database for that user");
 			return null;
 		}
 		else {
-			return groups;
+			return groupsAccounts;
 		}			
 
 	}

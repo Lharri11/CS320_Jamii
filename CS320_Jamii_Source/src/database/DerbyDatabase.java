@@ -117,6 +117,9 @@ public class DerbyDatabase implements IDatabase {
 						returnGroups.add(group);
 					}
 
+					if (!found) {
+						System.out.println("<" + user + "> is not in the database");
+					}
 					return returnGroups;
 				}	finally{
 					DBUtil.closeQuietly(set);
@@ -126,7 +129,44 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	public List<Group> getGroupsLikeKeyword(String keyword){
+		return executeTransaction(new Transaction<List<Group>>() {
+			@Override
+			public List<Group> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet set = null;
+				System.out.println("reached DB with keyword "+ keyword);
+				try{
+					
+					stmt1 = conn.prepareStatement(
+							"select groups.group_id, groups.name, groups.description, groups.rating from groups where groups.name like ? "
+							);
+					stmt1.setString(1, "%"+keyword+"%");
+					
+					set = stmt1.executeQuery();
+					
+					List<Group> returnGroups = new ArrayList<Group>();
+					Boolean found = false;
 
+					while(set.next()) {
+						found = true;
+						Group group = new Group();
+						
+						loadGroup(group, set, 1);
+						returnGroups.add(group);
+					}
+
+					if (!found) {
+						System.out.println("<" + keyword + "> not found as a valid group");
+					}
+					return returnGroups;
+				}	finally{
+					DBUtil.closeQuietly(set);
+					DBUtil.closeQuietly(stmt1);		
+				}
+			}
+		});
+	}
 	
 	public String queryForPasswordByUsername(String username){
 		try{
@@ -180,6 +220,16 @@ public class DerbyDatabase implements IDatabase {
 			return false;
 		}
 	}
+	
+	
+	
+	public void removeMemberFromGroup(Account account, Group group){
+		
+			//TODO : sql query remove row from group where account equals parameter
+	}
+	
+	
+	
 
 	/*
 	 * -----------------------HELPER METHODS FOR STREAMLINING SQL QUERIES----------------------------------------------------
@@ -293,8 +343,8 @@ public class DerbyDatabase implements IDatabase {
 		
 		try{
 			stmt1 = conn.prepareStatement(
-					"INSERT INTO accounts (username, password, login_id, name, email, phonenumber) "
-					+ " VALUES(?,?,?,?,?,?)");
+					"INSERT INTO accounts (username, password, login_id, name, email, phone_number) "
+					+ " VALUES(?,?,?,?,?,?,?)");
 			stmt1.setString(1, account.getUsername());
 			stmt1.setString(2, account.getPassword());
 			stmt1.setInt(3, account.getLoginId());
@@ -476,7 +526,7 @@ public class DerbyDatabase implements IDatabase {
 						"	username varchar(40)," +
 						"	password varchar(40)," +
 						"   login_id integer," +
-						"	name varchar(50)," +
+						"	name varchar(20)," +
 						"	email varchar(50)," +
 						"	phonenumber varchar(25)" +
 						")"
@@ -591,7 +641,7 @@ public class DerbyDatabase implements IDatabase {
 					// populate accounts table (accounts first, since account_id is foreign key in groupMembers table)
 					insertAccount = conn.prepareStatement("insert into accounts (username, password, login_id, name, email, phonenumber) values (?, ?, ?, ?, ?, ?)");
 					for (Account account : accountList) {
-//						insertAccount.setInt(1, account.getAccountId());	// auto-generated primary key, don't insert this
+//						insertAccount.setInt(1, account.getUserId());	// auto-generated primary key, don't insert this
 						insertAccount.setString(1, account.getUsername());
 						insertAccount.setString(2, account.getPassword());
 						insertAccount.setInt(3, account.getLoginId());
