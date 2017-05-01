@@ -95,6 +95,16 @@ public class DerbyDatabaseTest {
 		
 	}
 	
+	@Test
+	public void testGetGroupsLikeKeyword(){
+		
+		System.out.println("Testing: getGroupsLikeKeyword");
+		String keyword = "Group2";
+		String test = db.getGroupsLikeKeyword(keyword).get(0).getName();
+		assertEquals(keyword, test);
+		
+	}
+	
 	
 	
 	
