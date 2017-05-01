@@ -48,22 +48,11 @@
     					<div class="navbar-header">
     						<a href="home" class="navbar-brand brand"><img src="images/TransparentWhite.png" id="logo"></a>
    						</div>
-   							
-    				<div id="navbar-collapse-02" class="collapse navbar-collapse">
-  						<div id="generalSubmitContainer" >
-  							<form action="${pageContext.servletContext.contextPath}/login" method="get">
-  								<input name="buttonPress" id="generalSubmit" type="submit" value="Login"/>
-							</form>
-							
-  							<form action="${pageContext.servletContext.contextPath}/signup" method="get">
-  								<input name="buttonPress" id="generalSubmit" type="submit" value="Sign Up"/>
-							</form>
-							
-  							<form action="${pageContext.servletContext.contextPath}/user" method="get">
-  								<input name="buttonPress" id="generalSubmit" type="submit" value="Account"/>
-							</form>
-  						</div>
-  					</div>
+   						<ul class="nav navbar-nav navbar-right">
+    						<li class="propClone"><a href="login">Login</a></li>
+    						<li class="propClone"><a href="logout">Log Out</a></li>
+    						<li class="propClone"><a href="signup">Sign Up</a></li>
+    					</ul>
     					
     					
     				</div><!-- /.container -->
@@ -77,26 +66,24 @@
 		<div id="container" class="container">
 			<div class="col-lg-6 col-md-6 col-sm-12">
 				<div id="editContent" class="editContent">
-					<h1>Jamii - A place for communities!</h1>
+					<h1>Organize all your social groups</h1>
 				</div>
 				<div id="editContent" class="editContent">
-					<p class="lead">Jamii is a social media network that allows its users to organize their social groups. By 
-					providing an online community that is based solely on group communication, Jamii has created an environment
-					designed to bring people closer together. The development team has worked hard in order to learn and utilize
-					the various technologies associated with this web application, and we hope that you are able to enjoy and appreciate
-					our finished product!  
-					</p>
+					<p class="lead">Pommy ipsum complete mare bread and butter pudding collywobbles grub's up I'd reet fancy a,
+					 stop arsing around spend a penny grab a jumper barmy get away with ya flog, that's ace barmy upper class 
+					 laughing gear at the boozer. I bid you good day sorted it up North golly gosh bow ties are cool flabbergasted
+					  pennyboy bovver boots they can sod off a right royal knees up spiffing naff real ale lost her marbles, meat 
+					  and two veg scouser chin up copped a bollocking narky Southeners Bob's your uncle taking the mick blighty 
+					  scrumpy superb pie-eyed.</p>
 				</div>
-				
+				<div id="editContent" class="editContent">
+					<p>I bid you good day, bent as a nine bob note trouble and strife a bit miffed Northeners jammy git. </p>
+				</div>
 			</div>
 			
 			<div class="col-lg-5 col-lg-offset-1 col-md-6 col-sm-12">
 				<img class="img-responsive" src="images/friends.jpeg">
 			</div>
-			
-			<div id="centerDiv">
-					<p class="bold">Jamii, Inc. | 443 Country Club Rd, York, PA 17403 | (717) 846-7788</p>
-				</div>
 		</div>
 		<!-- /.container -->
     <!-- // End Content Block 1-5 v1 -->

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Script Eden ( http://scripteden.net/ ) Template Builder v2.0.0">  
-    <title>${account.name} -  Jamii</title>
+    <title>userName -  Jamii</title>
     <!--pageMeta-->
 
     <!-- Loading Bootstrap -->
@@ -48,20 +48,22 @@
    						</div>
     					<!--/.navbar-header -->
     					<!-- HERE IS YOUR SEARCH JSP THING -->
-    					<form class="search-collapse" action="${pageContext.servletContext.contextPath}/searchSite" method="post" >
-                            <input type="text" id="searchText"placeholder="Search..." required>
-                            <input type="image" src="images/search.png" value="Search" id="searchButton">
+    					
+    					<form class="search-collapse" action="${pageContext.servletContext.contextPath}/user" method="post" >
+                            <input type="text" id="searchText" placeholder="Search..." name="keyword" required>
+                            <input type="image" src="images/search.png" value="Search" name="search" id="searchButton">
 						</form><br>
 	                    
-	                    <form action="${pageContext.servletContext.contextPath}/user" method="get">
-  							<div id="navbar-collapse-02" class="collapse navbar-collapse" >
-    							<input name="buttonPress" id="generalSubmit" type="submit" value="Logout">
-    						</div> 
-						</form>
-						
-    					
+    					<div id="navbar-collapse-02" class="collapse navbar-collapse" >
+    						<ul class="nav navbar-nav navbar-right">
+    							<li class="propClone"><a href="#"><img src="images/user.png" class="tabIcon"></a></li>
+    							<li class="propClone"><a href="#"><img src="images/gear.png" class="tabIcon"></a></li>
+    							<li><input type="image" src="images/logout.png" value="logout" name="logout" class="tabIcon" name="logoutSubmit"></li>
+    						</ul>
+    					</div> 
+    					<!--/.navbar-collapse -->
     				</div><!-- /.container -->
-    			</nav><!--/.navbar-collapse -->
+    			</nav>
     			
     		<!--pageContent-->
     			<div >
@@ -85,11 +87,11 @@
     			
     				
     				<div class="sidebar">
-    					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Group Options</button>
+    					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Click Me</button>
     					<div id="sideBar" style="right: -300px;">
     						<ul class="list-unstyled groupList">
-  								<li class="groupListItem"><a href="http://localhost:8081/Jamii/group" style="color: white">Enter Main Group</a></li>
- 							 	<li class="groupListItem">Create New Group</li>
+  								<li class="groupListItem"><a href="#">Make a new group</a></li>
+ 							 	<li class="groupListItem">Group option</li>
   								<li class="groupListItem">Group option</li>
 							</ul>
     					</div>

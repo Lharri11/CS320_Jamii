@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri Apr 28 02:39:36 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-b349-47f7-000005e78680 
-on database directory C:\Users\Logan\git\CS320_Jamii_Source\test.db with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
-Loaded from file:/C:/Users/Logan/workspace/CS320_Derby/lib/derby.jar
+Sun Apr 30 19:21:35 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-c12b-581a-0000025ff880 
+on database directory /Users/alyssamcdevitt/git/CS320_Jamii/CS320_Jamii_Source/test.db with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
+Loaded from file:/Users/alyssamcdevitt/Documents/workspace/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_51-b16
-user.dir=C:\Users\Logan\git\CS320_Jamii_Source
-os.name=Windows 8.1
-os.arch=amd64
-os.version=6.3
+java.runtime.version=1.8.0_74-b02
+user.dir=/Users/alyssamcdevitt/git/CS320_Jamii/CS320_Jamii_Source
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.12
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

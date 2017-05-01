@@ -65,20 +65,18 @@
     			
     		<!--pageContent-->
     			<div class="pageContent">
-    				<div id="coverPhotoContainer">
-    				<!-- HERE IS WHERE THE COVER PHOTO JSP THING IS : "${group.img}"-->
-    					<img src="images/coverTest.jpg" id="coverPhoto">
-    				</div>
-    				<div class="pageInfo">
-    					<div id="rating"> :) </div>
-    					<p id="pageName"> groupName </p>
-    					<div id="pageLinks"> 
-    						<a href="#">${group.memberCount} Members</a> |
-    						<a href="#">Photos</a> |
-    						<a href="#">Rules</a> |
-    						<a href="#">Leave </a>
-    					</div>
-    				</div>
+    				<div class="results">
+    				
+    					<h1>Results:</h1>
+						<table>
+    					<c:forEach items="${groups}" var="group">
+			        			<td class="titleCol">${group.name}</td>
+			        			<td class="descriptionCol">${group.description}</td>
+			        			<td class="ratingCol">${group.rating}</td>	
+			    		</c:forEach>
+			    		</table>
+			    		
+			    	</div>
     				
     				<div class="sidebar">
     					<button  onclick="toggleSideBar()" id="toggle" style="right: 0px;" >Click Me</button>
@@ -91,20 +89,7 @@
     					</div>
     				</div>
     				
-    				<div class="postForm">
-    					<img src="images/userTest.jpg" class="postPhotos">
-    					<form id="post" action="${pageContext.servletContext.contextPath}/newPost" method="post">
-    						<textarea rows="4" cols="50" id="newPost" name="newPost" placeholder="What do you want this group to know?" value="${postText}" form="post" required></textarea>
-                			<input type="Submit" value="Post" id="postSubmit" name="postSubmit">
-    					</form>  
-    				</div>
     				
-    				<div class="aPost">
-    					<img src="images/userTest.jpg" class="postPhotos">
-    					<a class="name" href="#">Alyssa McDevitt</a>
-    					<h6 class="date">April 29, 2017, 3:23 PM</h6>
-    					<h4 class="postText">Test</h4>
- 					</div>
     			</div>
     			
     			
